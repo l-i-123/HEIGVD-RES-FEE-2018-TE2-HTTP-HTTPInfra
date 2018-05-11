@@ -1,0 +1,42 @@
+Note pour docker
+192.168.99.100
+
+********************************************Etape 1***********************************************
+
+docker ps list les contener
+
+//Mapage du poor avec -p 9090:80
+docker run -d -p 9090:80 php:7.0-apache
+
+//Vérification du lancement du contener
+docker -ps
+
+//Visualisation des logs
+docker logs
+
+//test du server apache
+telnet 192.168.99.100 9090
+
+//Trouver l'adresse ip d'un contener
+docker ps
+
+docker inspect "Nom du contener"
+
+
+//Ouvrir un terminal dans le contener
+docker exec -it "nom contener" /bin/bash
+
+//Acceder au fichier de configuration apache2
+cd /etc/apache2
+
+//Fichier de configuration interessant
+cd /etc/apache2/sites-available/000-default.conf
+
+//build le docker file
+docker build -t res/apache_php .
+
+//Lancement de l'image créé
+docker run -p 9090:80 res/apache_php
+
+
+********************************************Etape 2***********************************************
