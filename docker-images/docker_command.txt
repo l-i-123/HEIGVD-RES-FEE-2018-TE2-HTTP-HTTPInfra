@@ -9,7 +9,7 @@ docker ps list les contener
 docker run -d -p 9090:80 php:7.0-apache
 
 //Vérification du lancement du contener
-docker -ps
+docker ps
 
 //Visualisation des logs
 docker logs
@@ -40,3 +40,14 @@ docker run -p 9090:80 res/apache_php
 
 
 ********************************************Etape 2***********************************************
+//initialisation du package.json
+npm init
+
+//Ajout du module chance
+npm install --save chance
+
+//Ajout du module express
+npm install express --save
+
+//lancement du contener
+docker run -p 9090:3000 res/express

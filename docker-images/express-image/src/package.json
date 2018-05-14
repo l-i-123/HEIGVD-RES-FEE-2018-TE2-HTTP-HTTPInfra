@@ -1,0 +1,15 @@
+{
+  "name": "express-image",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Elie N'djoli",
+  "license": "ISC",
+  "dependencies": {
+    "chance": "1.0.16",
+    "express": "^4.16.3"
+  }
+}
