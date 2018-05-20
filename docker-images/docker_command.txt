@@ -49,5 +49,90 @@ npm install --save chance
 //Ajout du module express
 npm install express --save
 
-//lancement du contener
+//lancer un contener visible depuis l'exterieur
 docker run -p 9090:3000 res/express
+
+//lancer un contener invisible de l'exterieur
+docker run res/express
+
+//Accéder à une machine docker
+docker-machine ssh
+
+//port maper un container
+docker inspect "Nom du contener" //récuperation de l'adresse ip
+
+
+********************************************Etape 3***********************************************
+docker run -d --name apache_static res/apache_php
+docker run -d --name express_dynamic res/express
+
+
+docker inspect apache_static | grep -i ipaddress
+//adresse de apache_static 172.17.0.3
+
+docker inspect express_dynamic | grep -i ipaddress
+//adresse de express_dynamic 172.17.0.2
+
+//Connection à la machine docker
+docker-machine ssh
+
+//Contrôle du fonctionnement des contener
+telnet 172.17.0.3 80
+GET / HTTP/1.0
+
+telnet 172.17.0.2 3000
+GET / HTTP/1.0
+
+//Paramétrage du serveur apache
+docker run -it -p 8080:80 php:7.0-apache /bin/bash
+cd /etc/apache2/sites-available
+
+//création d'un nouveau fichier de configuration 001-reverse-proxy.conf
+//Installation de vim ou nano afin d'éditer le fichier conf
+
+//Contenu du fichier 001-reverse-proxy.conf
+<VirtualHost *:80>
+        ServerName demo.res.ch
+
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+        ProxyPass "/api/students/" "http://172.17.0.2:3000/"
+        ProxyPassReverse "/api/students/" "http://172.17.0.2:3000/"
+
+        ProxyPass "/" "http://172.17.0.3:80/"
+        ProxyPassReverse "/" "http://172.17.0.3:80/"
+</VirtualHost>
+
+//activation des modules nécessaire au reverse proxy
+cd /etc/apache2/
+a2enmod proxy
+a2enmod proxy_http
+
+//Activer le nouveau sites-available
+a2ensite 001*
+service apache2 reload
+
+//Test de la configuration
+telnet 192.168.99.100 8080
+GET / HTTP/1.0
+Host: demo.res.ch
+
+telnet 192.168.99.100 8080
+GET /api/students/ HTTP/1.0
+Host: demo.res.ch
+
+
+//Build de l'image docker
+docker build -t res/apache_rp .
+//Lancement de l'image
+docker run -p 8080:80 -d --name apache_rp res/apache_rp
+
+//Test du reverse proxy
+
+//Après avoir lié l'adresse 192.168.99.100 au nom demo.res.ch dans le fichier host
+//On peut tester le bon fonctionnement du serveur en accedant au page ave les urls suivant
+http://demo.res.ch:8080/
+http://demo.res.ch:8080/api/students/
+
+********************************************Etape 4***********************************************
