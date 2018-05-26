@@ -8,9 +8,9 @@
         #ErrorLog ${APACHE_LOG_DIR}/error.log
         #CustomLog ${APACHE_LOG_DIR}/access.log combined
 
-        ProxyPass '/api/students/' 'http://<?php print "$dynamic_app"?>'
-        ProxyPassReverse '/api/students/' '<?php print "$dynamic_app"?>'
+        ProxyPass '/api/students/' 'http://<?php print "$dynamic_app"?>/'
+        ProxyPassReverse '/api/students/' 'http://<?php print "$dynamic_app"?>/'
 
-        ProxyPass '/' 'http://<?php print "$static_app"?>'
-        ProxyPassReverse '/' 'http://<?php print "$static_app"?>'
+        ProxyPass '/' 'http://<?php print "$static_app"?>/'
+        ProxyPassReverse '/' 'http://<?php print "$static_app"?>/'
 </VirtualHost>
