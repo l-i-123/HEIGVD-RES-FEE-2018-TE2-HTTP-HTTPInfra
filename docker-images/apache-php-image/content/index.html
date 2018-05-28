@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+<?php
+	$mon_ip = getenv('IP_ADRESSE');
+?>
 
   <head>
 
@@ -49,6 +52,7 @@
         <div class="container">
           <h1 class="masthead-heading mb-0">RES Lab HTTP</h1>
           <h2 class="masthead-subheading mb-0">HEIG-VD</h2>
+		  <h2 class="info_adresse" href="#"><?php print "$mon_ip"?></h2>
           <a href="#" class="btn btn-primary btn-xl rounded-pill mt-5">Learn More</a>
         </div>
       </div>
@@ -73,6 +77,7 @@
 
     <!--Custom scrip to load stident -->
     <script src="js/students.js"></script>
+	<script src="js/adresse_ip.js"></script>
 
   </body>
 
