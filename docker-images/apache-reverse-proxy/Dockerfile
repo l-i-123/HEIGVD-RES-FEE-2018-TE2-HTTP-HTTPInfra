@@ -10,4 +10,8 @@ RUN a2enmod proxy
 RUN a2enmod proxy_http
 RUN a2enmod proxy_balancer
 RUN a2enmod lbmethod_byrequests slotmem_shm
+RUN a2enmod authz_core
+RUN a2enmod authz_host
+RUN a2enmod headers
+RUN a2enmod status
 RUN a2ensite 000-* 001-*

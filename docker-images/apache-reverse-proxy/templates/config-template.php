@@ -18,20 +18,25 @@
 			BalancerMember 'http://<?php print "$dynamic_app3"?>'
 		</Proxy>
 		
+		Header add Set-Cookie "ROUTEID=.%{BALANCER_WORKER_ROUTE}e; path=/" env=BALANCER_ROUTE_CHANGED
+		
 		<Proxy balancer://mysetstatic>
-			BalancerMember 'http://<?php print "$static_app1"?>'
-			BalancerMember 'http://<?php print "$static_app2"?>'
-			BalancerMember 'http://<?php print "$static_app3"?>'
+			BalancerMember 'http://<?php print "$static_app1"?>' route=staticNode1
+			BalancerMember 'http://<?php print "$static_app2"?>' route=staticNode2
+			BalancerMember 'http://<?php print "$static_app3"?>' route=staticNode3
+			ProxySet stickysession=ROUTEID
 		</Proxy>
 
-        ProxyPass '/api/students/' 'balancer://mysetdynamic/'
-        ProxyPassReverse '/api/students/' 'balancer://mysetdynamic/'
+        ProxyPass '/api/' 'balancer://mysetdynamic/'
+        ProxyPassReverse '/api/' 'balancer://mysetdynamic/'
 
-        ProxyPass '/' 'balancer://mysetstatic/'
+        ProxyPass '/' 'balancer://mysetstatic/'  stickysession=JSESSIONID|jsessionid scolonpathdelim=On
         ProxyPassReverse '/' 'balancer://mysetstatic/'
 		
-		<Location "/balancer-manager">
+		<Location /balancer-manager>
 			SetHandler balancer-manager
 			Require host demo.res.ch
 		</Location>
+		ProxyPass '/balancer-manager' '!'
+		
 </VirtualHost>

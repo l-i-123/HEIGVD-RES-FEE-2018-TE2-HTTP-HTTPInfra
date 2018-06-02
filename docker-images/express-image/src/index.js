@@ -1,12 +1,18 @@
 const Chance = require('chance');
 const chance = new Chance();
 
+var ip = require('ip');
+
 const express = require('express');
 const app = express();
 
 
-app.get('/', function (req, res) {
+app.get('/students', function (req, res) {
   res.send(generatePerson());
+})
+
+app.get('/getip', function (req, res) {
+  res.send(ip.address());
 })
 
 app.listen(3000, function () {

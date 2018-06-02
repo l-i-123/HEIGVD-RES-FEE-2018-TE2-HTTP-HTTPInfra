@@ -52,7 +52,8 @@
         <div class="container">
           <h1 class="masthead-heading mb-0">RES Lab HTTP</h1>
           <h2 class="masthead-subheading mb-0">HEIG-VD</h2>
-		  <h2 class="masthead-subheading mb-0"><?php print "$mon_ip"?></h2>
+		  <h2 class="masthead-subheading mb-0">Adresse serveur static: <?php print "$mon_ip"?></h2>
+		  <h2 class="masthead-subheading mb-0" id=ipDynamic></h2>
           <a href="#" class="btn btn-primary btn-xl rounded-pill mt-5">Learn More</a>
         </div>
       </div>
@@ -77,6 +78,7 @@
 
     <!--Custom scrip to load stident -->
     <script src="js/students.js"></script>
+	<script src="js/ip.js"></script>
 
   </body>
 
