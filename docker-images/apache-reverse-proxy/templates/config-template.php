@@ -26,6 +26,11 @@
 			BalancerMember 'http://<?php print "$static_app3"?>' route=staticNode3
 			ProxySet stickysession=ROUTEID
 		</Proxy>
+		
+		<Location /balancer-manager>
+			SetHandler balancer-manager
+		</Location>
+		ProxyPass '/balancer-manager' '!'
 
         ProxyPass '/api/' 'balancer://mysetdynamic/'
         ProxyPassReverse '/api/' 'balancer://mysetdynamic/'
@@ -33,10 +38,5 @@
         ProxyPass '/' 'balancer://mysetstatic/'  stickysession=JSESSIONID|jsessionid scolonpathdelim=On
         ProxyPassReverse '/' 'balancer://mysetstatic/'
 		
-		<Location /balancer-manager>
-			SetHandler balancer-manager
-			Require host demo.res.ch
-		</Location>
-		ProxyPass '/balancer-manager' '!'
 		
 </VirtualHost>
