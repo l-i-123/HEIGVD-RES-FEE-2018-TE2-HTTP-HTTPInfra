@@ -8,9 +8,6 @@
 ?>
 <VirtualHost *:80>
         ServerName demo.res.ch
-
-        #ErrorLog ${APACHE_LOG_DIR}/error.log
-        #CustomLog ${APACHE_LOG_DIR}/access.log combined
 		
 		<Proxy balancer://mysetdynamic>
 			BalancerMember 'http://<?php print "$dynamic_app1"?>'
@@ -19,7 +16,6 @@
 		</Proxy>
 		
 		Header add Set-Cookie "ROUTEID=.%{BALANCER_WORKER_ROUTE}e; path=/" env=BALANCER_ROUTE_CHANGED
-		
 		<Proxy balancer://mysetstatic>
 			BalancerMember 'http://<?php print "$static_app1"?>' route=staticNode1
 			BalancerMember 'http://<?php print "$static_app2"?>' route=staticNode2
@@ -35,7 +31,7 @@
         ProxyPass '/api/' 'balancer://mysetdynamic/'
         ProxyPassReverse '/api/' 'balancer://mysetdynamic/'
 
-        ProxyPass '/' 'balancer://mysetstatic/'  stickysession=JSESSIONID|jsessionid scolonpathdelim=On
+        ProxyPass '/' 'balancer://mysetstatic/'
         ProxyPassReverse '/' 'balancer://mysetstatic/'
 		
 		
