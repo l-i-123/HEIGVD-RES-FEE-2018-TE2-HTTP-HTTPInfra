@@ -15,6 +15,9 @@
 			BalancerMember 'http://<?php print "$dynamic_app3"?>'
 		</Proxy>
 		
+		
+		//BALANCER_WORKER_ROUTE contient la route choisi par le serveur
+		//BALANCER_ROUTE_CHANGED contient 1 si la route extraite de la requête est différente de la route du serveur
 		Header add Set-Cookie "ROUTEID=.%{BALANCER_WORKER_ROUTE}e; path=/" env=BALANCER_ROUTE_CHANGED
 		<Proxy balancer://mysetstatic>
 			BalancerMember 'http://<?php print "$static_app1"?>' route=staticNode1
