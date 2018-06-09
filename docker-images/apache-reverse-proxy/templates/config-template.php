@@ -23,6 +23,11 @@
 			BalancerMember 'http://<?php print "$static_app2"?>'
 			BalancerMember 'http://<?php print "$static_app3"?>'
 		</Proxy>
+		
+		<Location "/balancer-manager">
+			SetHandler balancer-manager
+			Require host demo.res.ch
+		</Location>
 
         ProxyPass '/api/students/' 'balancer://mysetdynamic/'
         ProxyPassReverse '/api/students/' 'balancer://mysetdynamic/'
@@ -30,8 +35,4 @@
         ProxyPass '/' 'balancer://mysetstatic/'
         ProxyPassReverse '/' 'balancer://mysetstatic/'
 		
-		<Location "/balancer-manager">
-			SetHandler balancer-manager
-			Require host demo.res.ch
-		</Location>
 </VirtualHost>
