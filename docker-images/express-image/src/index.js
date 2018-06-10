@@ -1,4 +1,4 @@
-const Chance = require('Chance');
+const Chance = require('chance');
 const chance = new Chance();
 
 const express = require('express');
@@ -10,7 +10,7 @@ app.get('/', function (req, res) {
 })
 
 app.listen(3000, function () {
-  console.log('Example app listening on port 3000!');
+  console.log('application listening on port 3000!');
 })
 
 function generatePerson(){
@@ -29,3 +29,4 @@ function generatePerson(){
 	}
 	return persons;
 }
+
