@@ -23,6 +23,7 @@
 			BalancerMember 'http://<?php print "$static_app1"?>' route=staticNode1
 			BalancerMember 'http://<?php print "$static_app2"?>' route=staticNode2
 			BalancerMember 'http://<?php print "$static_app3"?>' route=staticNode3
+			//Le sticky session contient la route qui à été choisi par le serveur
 			ProxySet stickysession=ROUTEID
 		</Proxy>
 		
